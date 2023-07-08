@@ -5,25 +5,18 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    {% block custom_css%} {% endblock %}
   </head>
-  <body >
+  <body style="display:flex; flex-direction:column; 
+  justify-content:space-between;min-height:100vh;">
     <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #616161;">
-        <a class="navbar-brand" href="/"><img style="width: 100px;" src="https://i.ibb.co/CVXZ6pS/Captura-de-pantalla-de-2023-07-07-18-57-08-removebg-preview.png" alt="Logo"></a>
+        <a class="navbar-brand" href="/"><img style="width: 100px;" src="{{url_for('static',filename='images/logo.png')}}" alt="Logo"></a>
         <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#collapsibleNavId" aria-controls="collapsibleNavId"
             aria-expanded="false" aria-label="Toggle navigation"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
               </svg></button>
         <div class="collapse navbar-collapse" id="collapsibleNavId">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Categories</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownId">
-                        <a class="dropdown-item" href="#">Action 1</a>
-                    </div>
-                </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <a class="btn btn-outline-light my-2 my-sm-0 mx-1" href="/login">Log in</a>
@@ -31,10 +24,12 @@
             </form>
         </div>
     </nav>
+    
       {% block body %}
       {% endblock %}
-    <footer style="background-color: #616161; height: 22vh;position:static;bottom: 0; width: 100%;">
-        
+    <footer class="d-flex justify-content-center align-items-center flex-column" style="background-color: #616161;width: 100%;">
+        <img class="h-100" src="{{url_for('static',filename='images/logo.png')}}" alt="Logo">
+        <p class="text-light">All rights reserved © Bloggy 2023 - ∞</p>
     </footer>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

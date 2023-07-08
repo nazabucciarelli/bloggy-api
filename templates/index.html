@@ -1,14 +1,78 @@
 {% extends 'layout.html'%}
 {% block title%} Bloggy - Only for curious people{% endblock %}
-
+{% block custom_css%}
+<link rel="stylesheet" href="{{url_for('static',filename='css/home.css')}}">{% endblock %}
 {% block body %}
-    <div class="d-flex align-items-center justify-content-center p-5">
-            <ul class="list-group d-flex flex-row">
-                <a href="" class="list-group-item mx-2 text-decoration-none text-secondary">Gaming</a>
-                <a href="" class="list-group-item mx-2 text-decoration-none text-secondary">Coding</a>
-                <a href="" class="list-group-item mx-2 text-decoration-none text-secondary">Technology</a>
-                <a href="" class="list-group-item mx-2 text-decoration-none text-secondary">Science</a>
-                <a href="" class="list-group-item mx-2 text-decoration-none text-secondary">Sports</a>
-              </ul>
-    </div>
+<div class="container d-flex align-items-center my-5">
+    <ul class="list-group d-flex flex-row">
+        <a href="" class="list-group-item mx-2 text-decoration-none text-secondary">Gaming</a>
+        <a href="" class="list-group-item mx-2 text-decoration-none text-secondary">Coding</a>
+        <a href="" class="list-group-item mx-2 text-decoration-none text-secondary">Technology</a>
+        <a href="" class="list-group-item mx-2 text-decoration-none text-secondary">Science</a>
+        <a href="" class="list-group-item mx-2 text-decoration-none text-secondary">Sports</a>
+        <a href="" class="list-group-item mx-2 text-decoration-none text-secondary">Humor</a>
+        <a href="" class="list-group-item mx-2 text-decoration-none text-secondary">Travel</a>
+        <a href="" class="list-group-item mx-2 text-decoration-none text-secondary">Food</a>
+
+    </ul>
+</div>
+<h5 class="text-center text-bold">You are on Gaming category</h5>
+<div class="container bg-light bg-gradient rounded">
+    <form class="d-flex justify-content-center align-items-center p-5">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <img class="user-image m-2" src="{{url_for('static',filename='images/user.jpg')}}" alt="User default image">
+            <select name="" id="">
+                <option value="" selected disabled hidden>Choose user</option>
+                <option value="">Albert</option>
+            </select>
+        </div>
+        <div class="d-flex w-50 flex-column m-2">
+            <input class="my-2 rounded p-2 border-0" placeholder="Insert a title for your post" type="text">
+            <textarea placeholder="What are you thinking about?" style="resize: none;" class="rounded p-2 border-0"
+                rows="4" name="" id=""></textarea>
+        </div>
+        <button class="btn btn-primary">Send</button>
+    </form>
+</div>
+
+<section class="container bg-light bg-gradient rounded p-5 my-5">
+    <h1 class="text-center font-weight-bold my-5">Here you will see what other people says...</h1>
+    
+    <article class="my-5">
+        <div class="container d-flex justify-content-center align-items-center bg-white p-2 rounded">
+            <img class="user-image m-2"  src="{{url_for('static',filename='images/user.jpg')}}" alt="User image">
+            <div class="d-flex flex-column">
+                <p class="m-0 font-weight-bold my-1">Roman says:</p>
+                <h3 class="m-0 font-weight-bold my-2">Title</h3>
+                <p class="m-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis provident aliquid distinctio vel,
+                    deserunt, nostrum iure fugiat explicabo similique adipisci laudantium. Doloremque eaque veritatis itaque
+                    vitae, nihil obcaecati quas enim.</p>
+                <div class="m-1 d-flex flex-row justify-content-between">
+                    <div class="d-flex text-muted mt-2">
+                        <p class="mr-5">Posted on 20/06/2022</p>
+                        <p>Edited on 20/06/2022</p>
+                    </div>
+                    <a href="">View Comments ↴</a>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex align-items-center bg-white w-75 p-2 rounded">
+            <img class="user-image m-2"  src="{{url_for('static',filename='images/user.jpg')}}" alt="User image">
+            <div class="d-flex flex-column">
+                <p class="m-0 font-weight-bold my-1">Roman commented:</p>
+                <p class="m-0">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Blanditiis provident aliquid distinctio vel,
+                    deserunt, nostrum iure fugiat explicabo similique adipisci laudantium. Doloremque eaque veritatis itaque
+                    vitae, nihil obcaecati quas enim.</p>
+                <div class="m-1 d-flex flex-row justify-content-between">
+                    <div class="d-flex text-muted mt-2">
+                        <p class="mr-5">Posted on 20/06/2022</p>
+                        <p>Edited on 20/06/2022</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+</section>
+
+
 {% endblock %}
