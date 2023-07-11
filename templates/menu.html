@@ -1,0 +1,8 @@
+<div class="container d-flex align-items-center my-5">
+    <ul class="list-group d-flex flex-row">
+        {% for category in categories%}
+        <a href="get_posts/{{category.id}}" class="list-group-item mx-2 text-decoration-none text-secondary">{{category.name}}</a>
+        {% endfor %}
+    </ul>
+</div>
+
