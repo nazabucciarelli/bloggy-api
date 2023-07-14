@@ -1,12 +1,21 @@
 {% extends 'layout.html'%}
+{% block title %} Bloggy - Made for curious people{% endblock %}
 {% block custom_css%}
 <link rel="stylesheet" href="{{url_for('static',filename='css/home.css')}}">
 {%endblock%}
 {% block body %}
-{% include 'menu.html'%}
+<div class="container">
+    {% include 'menu.html'%}
+</div>
+{% for category in categories%}
+{% if category.id == category_id%}
+<h1 class="text-center">You are on {{category.name}} Category</h1>
+{% endif %}
+{% endfor %}
+
 
 <div class="container bg-light bg-gradient rounded">
-    <form action="/post" method="POST" class="d-flex justify-content-center align-items-center p-5">
+    <form action="/post/{{category_id}}" method="POST" class="d-flex justify-content-center align-items-center p-5">
         <div class="d-flex flex-column justify-content-center align-items-center">
             <img class="user-image m-2" src="{{url_for('static',filename='images/user.jpg')}}" alt="User default image">
             <select required name="user">
@@ -26,10 +35,13 @@
     </form>
 </div>
 
-
 <section class="container bg-light bg-gradient rounded p-5 my-5">
     <h1 class="text-center font-weight-bold my-5">Here you will see what other people says...</h1>
+    {% if posts_count == 0 %}
+    <p class="text-center">Oops! No posts here :/</p>
+    {% endif %}
     {% for post in posts%}
+    {% if post.visible%}
     <article class="my-5">
         <div class="container d-flex align-items-center bg-white p-2 rounded">
             <img class="user-image m-2" src="{{url_for('static',filename='images/user.jpg')}}" alt="User image">
@@ -48,6 +60,20 @@
                         <p>Edited on {{post.edit_date}}</p>
                         {% endif %}
                     </div>
+                    <form class="d-inline" action="/delete_post/{{post.id}}" method="POST">
+                        <button type="submit" class="btn btn-danger">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-trash" viewBox="0 0 16 16">
+                                <path
+                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                <path
+                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                            </svg>
+                        </button>
+                    </form>
+
+
+
                 </div>
             </div>
         </div>
@@ -64,9 +90,11 @@
                 <div id="collapse{{post.id}}" class="accordion-collapse collapse" aria-labelledby="headingTwo"
                     data-bs-parent="#collapseExample{{post.id}}">
                     <div class="accordion-body">
+                        {% set counter= {'count': 0} %}
                         {% for comment in comments%}
-                        {% if comment.post_id == post.id %}
-                        <div class="d-flex align-items-center bg-white w-75 p-2 rounded">
+                        {% if comment.post_id == post.id and comment.visible == 1 %}
+                        {% if counter.update({'count': counter.count + 1}) %}{% endif %}
+                        <div class="d-flex align-items-center bg-white rounded">
                             <img class="user-image m-2" src="{{url_for('static',filename='images/user.jpg')}}"
                                 alt="User image">
                             <div class="d-flex flex-column p-2 w-100">
@@ -76,18 +104,36 @@
                                 {% endif %}
                                 {% endfor %}
                                 <p class="m-0">{{ comment.content }}</p>
-                                <div class="m-1 d-flex flex-row justify-content-between">
-                                    <div class="d-flex text-muted mt-2">
-                                        <p class="mr-5">Posted on {{comment.date}}</p>
-                                        {%if comment.edit_date != none %}
-                                        <p>Edited on {{comment.edit_date}}</p>
-                                        {% endif %}
+                                <div class="d-flex justify-content-between">
+                                    <div class="m-1 d-flex flex-row justify-content-between">
+                                        <div class="d-flex text-muted mt-2">
+                                            <p class="mr-5">Posted on {{comment.date}}</p>
+                                            {%if comment.edit_date != none %}
+                                            <p>Edited on {{comment.edit_date}}</p>
+                                            {% endif %}
+                                        </div>
                                     </div>
+                                    <form class="d-inline" action="/delete_comment/{{comment.id}}" method="POST">
+                                        <button class="btn btn-danger">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z" />
+                                                <path
+                                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z" />
+                                            </svg>
+                                        </button>
+                                    </form>
+
                                 </div>
+
                             </div>
                         </div>
                         {% endif %}
                         {% endfor %}
+                        {% if counter.count == 0%}
+                        <p class="my-2">No comments here</p>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -106,12 +152,13 @@
                 </select>
             </div>
 
-            <textarea required name="comment_content" class="border-0 p-1 w-75" rows="3" type="text" style="resize: none;"
-                placeholder="Comment something on this post!"></textarea>
+            <textarea required name="comment_content" class="border-0 p-1 w-75" rows="3" type="text"
+                style="resize: none;" placeholder="Comment something on this post!"></textarea>
             <button class="btn btn-primary m-2" type="submit">Send</button>
         </form>
 
     </article>
+    {% endif %}
     {% endfor %}
 
 </section>
