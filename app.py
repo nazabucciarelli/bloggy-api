@@ -7,7 +7,8 @@ from sqlalchemy.sql import func
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "mysql+pymysql://root:@localhost/bloggy_db"
+URI = "mysql+pymysql://root:@localhost/bloggy_db"
+app.config['SQLALCHEMY_DATABASE_URI'] = URI
 
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
@@ -102,8 +103,9 @@ def post(category_id):
     post_category_id = category_id
     post_date = func.current_timestamp()
     post_edit_date = None
-    new_post = Post(title=post_title, content=post_content, date=post_date, edit_date=post_edit_date,
-                    user_id=post_user_id, category_id=post_category_id, visible=1)
+    new_post = Post(title=post_title, content=post_content, date=post_date,
+                    edit_date=post_edit_date, user_id=post_user_id,
+                    category_id=post_category_id, visible=1)
     db.session.add(new_post)
     db.session.commit()
     return redirect(url_for('inject_posts', category_id=post_category_id))
@@ -116,7 +118,9 @@ def comment(post_id):
     comment_edit_date = None
     comment_user_id = request.form['comment_user_id']
     new_comment = Commentary(content=comment_content, date=comment_date,
-                             edit_date=comment_edit_date, user_id=comment_user_id, post_id=post_id, visible=1)
+                             edit_date=comment_edit_date,
+                             user_id=comment_user_id, post_id=post_id,
+                             visible=1)
     db.session.add(new_comment)
     db.session.commit()
     category_id = db.session.query(Post).get(post_id).category_id
@@ -127,7 +131,8 @@ def comment(post_id):
 def inject_posts(category_id):
     posts = db.session.query(Post).filter(Post.category_id == category_id)
     posts_count = posts.filter(Post.visible == 1).count()
-    return render_template('index.html', posts=posts, category_id=int(category_id), posts_count=posts_count)
+    return render_template('index.html', posts=posts, category_id=category_id,
+                           posts_count=posts_count)
 
 
 @app.route("/register_user", methods=['POST'])
@@ -140,7 +145,8 @@ def register_user():
         User.username == register_username).count() > 0
     if not username_exists:
         new_user = User(email=register_email,
-                        username=register_username, password=register_password, visible=1)
+                        username=register_username,
+                        password=register_password, visible=1)
         db.session.add(new_user)
         db.session.commit()
         success = True
@@ -164,21 +170,23 @@ def login_user():
 
 @app.route("/edit_post/<post_id>", methods=['POST'])
 def edit_post(post_id):
-    post = db.session.query(Post).get(post_id)    
+    post = db.session.query(Post).get(post_id)
     post.title = request.form[f'new_title_post{post_id}']
     post.content = request.form[f'new_content_post{post_id}']
     post.edit_date = func.current_timestamp()
     db.session.commit()
     return inject_posts(post.category_id)
 
+
 @app.route("/edit_comment/<comment_id>", methods=['POST'])
 def edit_comment(comment_id):
-    comment = db.session.query(Commentary).get(comment_id)    
+    comment = db.session.query(Commentary).get(comment_id)
     comment.content = request.form[f'new_content_comment{comment_id}']
     comment.edit_date = func.current_timestamp()
     post = db.session.query(Post).get(comment.post_id)
     db.session.commit()
     return inject_posts(post.category_id)
+
 
 @app.context_processor
 def inject_users():

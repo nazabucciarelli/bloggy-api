@@ -8,7 +8,7 @@
     {% include 'menu.html'%}
 </div>
 {% for category in categories%}
-{% if category.id == category_id%}
+{% if category.id == category_id|int%}
 <h1 class="text-center">You are on {{category.name}} Category</h1>
 {% endif %}
 {% endfor %}
