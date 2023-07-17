@@ -1,3 +1,14 @@
 .user-image{
     width: 70px !important;
 }
+
+.footer-logo{
+    width: 100%;
+    height: auto;
+}
+
+.scrollmenu {
+    overflow: auto;
+    white-space: nowrap;
+  }
+  
