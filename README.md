@@ -3,7 +3,7 @@
 
 Website made with SQLAlchemy on Flask, it works as a social blog, but it doesn't has a properly login system. Developed for the college subject "Practicas Profesionalizantes 1 - Python"
 
-## Acknowledgements
+## Technologies
 
  - Bootstrap
  - Flask
