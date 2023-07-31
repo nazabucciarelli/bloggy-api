@@ -45,4 +45,4 @@ and access it through typing [localhost:5000](http://localhost:5000/) in your br
 
 ## Author
 
-- [@Nazareno Bucciarelli](https://github.com/nazabucciarelliITEC)
+- [@Nazareno Bucciarelli](https://github.com/nazabucciarelli)
