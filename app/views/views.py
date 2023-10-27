@@ -50,7 +50,8 @@ class UserAPI(MethodView):
             username = user_json.get('username')
             password = user_json.get('password')
         except:
-            msg = "The request must have username and password fields."
+            msg = f"""The request must have username (str) 
+              and password (str) fields."""
             return jsonify(request_error=msg), 400
         new_user = User(username=username, password=password)
         db.session.add(new_user)
@@ -65,7 +66,8 @@ class UserAPI(MethodView):
         try:
             user_json = UserPrivateSchema().load(request.json)
         except:
-            msg = "The request must have username and password fields."
+            msg = f"""The request must have username (str) and
+              password (str) fields."""
             return jsonify(request_error=msg), 400
         username = user_json.get("username")
         password = user_json.get("password")
@@ -100,7 +102,7 @@ class CategoryAPI(MethodView):
         try:
             category_json = CategoryBasicSchema().load(request.json)
         except:
-            msg = "The request must have name field."
+            msg = "The request must have name (str) field."
             return jsonify(request_error=msg), 400
         name = category_json.get('name')
         new_category = Category(name=name)
@@ -116,7 +118,7 @@ class CategoryAPI(MethodView):
         try:
             category_json = CategoryBasicSchema().load(request.json)
         except:
-            msg = "The request must have name field."
+            msg = "The request must have name (str) field."
             return jsonify(request_error=msg), 400
         name = category_json.get('name')
         category.name = name
@@ -150,8 +152,8 @@ class PostAPI(MethodView):
         try:
             post_json = PostBasicSchema().load(request.json)
         except:
-            fields = "title, content, user_id and category_id"
-            msg = f"The request must have {fields} fields."
+            msg = f"""The request must have title (str), content (str), user_id
+                (int) and category_id (int) fields."""
             return jsonify(request_error=msg), 400
         title = post_json.get('title')
         content = post_json.get('content')
@@ -171,7 +173,7 @@ class PostAPI(MethodView):
         try:
             post_json = PostEditSchema().load(request.json)
         except:
-            msg = "The request must have title and content fields."
+            msg = "The request must have title (str) and content (str) fields."
             return jsonify(request_error=msg), 400
         title = post_json.get('title')
         content = post_json.get('content')
@@ -208,7 +210,8 @@ class CommentaryAPI(MethodView):
         try:
             commentary_json = CommentaryBasicSchema().load(request.json)
         except:
-            msg = "The request must have content, user_id and post_id fields."
+            msg = """The request must have content (str), user_id (int)
+              and post_id (int) fields."""
             return jsonify(request_error=msg), 400
         content = commentary_json.get('content')
         user_id = commentary_json.get('user_id')
@@ -227,7 +230,7 @@ class CommentaryAPI(MethodView):
         try:
             commentary_json = CommentaryEditSchema().load(request.json)
         except:
-            msg = "The request must have content field."
+            msg = "The request must have content (str) field."
             return jsonify(request_error=msg), 400
         content = commentary_json.get('content')
         commentary.content = content
