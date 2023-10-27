@@ -1,20 +1,20 @@
 
-# Bloggy - Basic Blog
+# Bloggy - API
 
-Website made with SQLAlchemy on Flask, it works as a social blog, but it doesn't has a properly login system. Developed for the college subject "Practicas Profesionalizantes 1 - Python"
+This project is the second part of an Integrated Final Evaluation, it consists in an API for the blog that we had to do in the first part of the evaluation. It basically has working endpoints for User, Category, Post and Commentary entities and their CRUD operations, receiving in any case the proper HTTP response. Developed for the college subject "Practicas Profesionalizantes 1 - Python"
 
 ## Technologies
 
- - Bootstrap
  - Flask
  - Python
- - HTML
- - CSS
  - MySQL
+ - Marshmallow
+ - SQLAlchemy
+
 
 ## Set-Up
 
-To deploy this project you will need an updated version of Python.
+To run this project you will need an updated version of Python.
 First, we will create a virtual enviroment. You can do it with
 ```bash
   python3 -m venv venv
