@@ -11,7 +11,6 @@ This project is the second part of an Integrated Final Evaluation, it consists i
  - Marshmallow
  - SQLAlchemy
 
-
 ## Set-Up
 
 To run this project you will need an updated version of Python.
