@@ -179,6 +179,7 @@ class PostAPI(MethodView):
         content = post_json.get('content')
         post.title = title
         post.content = content
+        post.edit_date = func.now()
         db.session.commit()
         return jsonify(PostSchema().dump(post)), 200
 
@@ -234,6 +235,7 @@ class CommentaryAPI(MethodView):
             return jsonify(request_error=msg), 400
         content = commentary_json.get('content')
         commentary.content = content
+        commentary.edit_date = func.now()
         db.session.commit()
         return jsonify(CommentarySchema().dump(commentary)), 200
 

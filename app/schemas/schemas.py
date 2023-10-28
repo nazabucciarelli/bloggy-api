@@ -47,7 +47,7 @@ class CommentaryBasicSchema(CommentaryEditSchema):
     post_id = fields.Integer()
 
 
-class CommentarySchema(ma.Schema):
+class CommentarySchema(CommentaryBasicSchema):
     id = fields.Integer(dump_only=True)
     date = fields.Date()
     edit_date = fields.Date()
