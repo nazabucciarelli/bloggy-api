@@ -38,8 +38,10 @@ class Post(db.Model):
                           onupdate=func.now(), nullable=True)
 
     user_id = db.Column(db.Integer, ForeignKey("user.id"), nullable=False)
+    user = db.relationship('User')
     category_id = db.Column(db.Integer, ForeignKey(
         "category.id"), nullable=False)
+    category = db.relationship('Category')
     visible = db.Column(db.Boolean, default=True, nullable=False)
 
     def __str__(self) -> str:
@@ -56,6 +58,7 @@ class Commentary(db.Model):
     edit_date = db.Column(DateTime(timezone=True),
                           onupdate=func.now(), nullable=True)
     user_id = db.Column(db.Integer, ForeignKey("user.id"), nullable=False)
+    user = db.relationship('User')
     post_id = db.Column(db.Integer, ForeignKey("post.id"), nullable=False)
     visible = db.Column(db.Boolean, default=True, nullable=False)
 

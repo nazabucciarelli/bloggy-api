@@ -16,25 +16,6 @@ class UserSchema(UserBasicSchema):
     id = fields.Integer(dump_only=True)
     visible = fields.Boolean()
 
-# Post schemas
-
-
-class PostEditSchema(ma.Schema):
-    title = fields.String()
-    content = fields.String()
-
-
-class PostBasicSchema(PostEditSchema):
-    user_id = fields.Integer()
-    category_id = fields.Integer()
-
-
-class PostSchema(PostBasicSchema):
-    id = fields.Integer(dump_only=True)
-    date = fields.Date()
-    edit_date = fields.Date()
-    visible = fields.Boolean()
-
 # Commentary schemas
 
 
@@ -45,6 +26,7 @@ class CommentaryEditSchema(ma.Schema):
 class CommentaryBasicSchema(CommentaryEditSchema):
     user_id = fields.Integer()
     post_id = fields.Integer()
+    user = fields.Nested(UserBasicSchema)
 
 
 class CommentarySchema(CommentaryBasicSchema):
@@ -63,3 +45,24 @@ class CategoryBasicSchema(ma.Schema):
 class CategorySchema(CategoryBasicSchema):
     id = fields.Integer(dump_only=True)
     visible = fields.Integer()
+
+# Post schemas
+
+
+class PostEditSchema(ma.Schema):
+    title = fields.String()
+    content = fields.String()
+
+
+class PostBasicSchema(PostEditSchema):
+    user_id = fields.Integer()
+    category_id = fields.Integer()
+
+
+class PostSchema(PostBasicSchema):
+    id = fields.Integer(dump_only=True)
+    date = fields.Date()
+    edit_date = fields.Date()
+    visible = fields.Boolean()
+    category = fields.Nested(CategoryBasicSchema)
+    user = fields.Nested(UserBasicSchema)
